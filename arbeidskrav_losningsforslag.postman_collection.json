@@ -1,0 +1,385 @@
+{
+	"info": {
+		"_postman_id": "c13ca23c-40ac-4377-b99a-fcdcb3c3ed5f",
+		"name": "emne 7 - web teknologi - arbeidskrav",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7022422"
+	},
+	"item": [
+		{
+			"name": "speakers",
+			"item": [
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/speakers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"speakers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/speakers/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"speakers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add speaker",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"name\": \"new speaker\",\n        \"email\": \"new.user@example.com\",\n        \"company\": \"new company\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/speakers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"speakers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update speaker by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"name\": \"updateed speaker\",\n        \"email\": \"updated.speaker@example.com\",\n        \"company\": \"updated company\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/speakers/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"speakers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "8",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/speakers/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"speakers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "rooms",
+			"item": [
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/rooms",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rooms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/rooms/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rooms",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add room",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"name\": \"new room\",\n        \"capacity\": 45\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/rooms",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rooms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"name\": \"updated room\",\n        \"capacity\": 45\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/rooms/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rooms",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/rooms/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rooms",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6",
+									"type": "string"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "talks",
+			"item": [
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/talks",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"talks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/talks/6",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"talks",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add talk",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"title\": \"new talk\",\n        \"start_time\": \"13:00:00\",\n        \"end_time\": \"13:30:00\",\n        \"room_id\": 6,\n        \"speaker_id\": 3\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/talks",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"talks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"title\": \"updated talk\",\n        \"start_time\": \"14:00:00\",\n        \"end_time\": \"15:30:00\",\n        \"room_id\": 3,\n        \"speaker_id\": 3\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/talks/6",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"talks",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/rooms/6",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"rooms",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

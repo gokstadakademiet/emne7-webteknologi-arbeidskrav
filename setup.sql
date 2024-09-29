@@ -1,17 +1,17 @@
 -- reset script
-drop database if exists losningforslag;
+drop database if exists losningsforslag;
 
 -- opprett data
-create database if not exists losningforslag;
+create database if not exists losningsforslag;
 
 -- definer hvilken database resten av skriptet skal kjøre mot
-use losningforslag;
+use losningsforslag;
 
 -- opprett tabell for rooms
 create table
     rooms (
         id int primary key auto_increment,
-        name varchar(20) not null unique,
+        name varchar(50) not null unique,
         capacity int not null
     );
 
@@ -37,7 +37,7 @@ create table
         foreign key (speaker_id) references speakers (id) on delete cascade 
     );
 
--- insert data to tables
+-- insert data to tables, generated with chatGPT
 insert into
     rooms (name, capacity)
 values
@@ -74,6 +74,48 @@ values
     ('Building Resilient Teams', '16:00:00', '17:30:00', 5, 5)
 ;
 
-select * from speakers;
+-- opprett triggere for validering av inserts statements
 
+-- ! set delimiter til // isteden for ;. 
+-- MySql antart at ; er slutten på hele create trigger statementen og ikke slutten på 
+-- en linje inni create trigger body.
+delimiter //
 
+-- definer trigger med navn "limit_rooms" skal kjøre før hver insert statement til rooms tabellen for å sjekke antall rom ikke overstiger 7
+create trigger limit_rooms before insert on rooms 
+for each row begin
+    -- trigger body begynner her
+
+    -- definer en variabel som holder på antall rom 
+    declare room_count int;
+    
+    -- hent antall rader i rooms tabellen og put dette inn i room_count variabelen over
+    select count(*) into room_count from rooms;
+
+    -- valider antall rom ikke er større eller lik 7
+    if room_count >= 7 then
+        -- hvis croom_count er 7 eller større send signal sqlstate '45000' tilsvarende throw exception i js.
+        signal sqlstate '45000'
+            set message_text = 'Cannot insert more than 7 rooms'; 
+    end if;
+end // -- siden vi har endret delimiter til // så bruker vi // her for å signalisere at dette er slutten på create trigger statementen vår.
+
+-- reset delimiter tilbake til ;
+
+create trigger talk_overlapping_time_and_room before insert on talks
+for each row begin 
+    declare overlapping int;
+
+    -- finn antall talk i talks tabellen som den nye talken har overlappende tid og rom med.
+    select count(*) into overlapping from talks 
+    where room_id = new.room_id 
+    and new.start_time between start_time and end_time;
+
+    -- hvis antall overlappende talks er større enn 0, avbryt insert og kast feilmelding.
+    if overlapping > 0 then
+        signal sqlstate '45000'
+        set message_text = 'Talk is overlapping existing talk in selected room';
+    end if;
+end // 
+
+delimiter ;
