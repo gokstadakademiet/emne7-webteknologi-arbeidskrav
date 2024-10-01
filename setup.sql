@@ -34,7 +34,7 @@ create table
         room_id int not null,
         speaker_id int not null,
         foreign key (room_id) references rooms (id) on delete cascade,
-        foreign key (speaker_id) references speakers (id) on delete cascade 
+        foreign key (speaker_id) references speakers (id) on delete cascade
     );
 
 -- insert data to tables
@@ -67,13 +67,39 @@ values
 insert into
     talks (title, start_time, end_time, room_id, speaker_id)
 values
-    ('Future of Technology', '10:00:00', '11:00:00', 1, 1),
+    (
+        'Future of Technology',
+        '10:00:00',
+        '11:00:00',
+        1,
+        1
+    ),
     ('AI Innovations', '11:30:00', '12:15:00', 2, 2),
-    ('Data Science Trends', '13:00:00', '13:30:00', 3, 3),
-    ('Effective Communication', '14:00:00', '14:00:00', 4, 4),
-    ('Building Resilient Teams', '16:00:00', '17:30:00', 5, 5)
-;
+    (
+        'Data Science Trends',
+        '13:00:00',
+        '13:30:00',
+        3,
+        3
+    ),
+    (
+        'Effective Communication',
+        '14:00:00',
+        '14:00:00',
+        4,
+        4
+    ),
+    (
+        'Building Resilient Teams',
+        '16:00:00',
+        '17:30:00',
+        5,
+        5
+    );
 
-select * from speakers;
+select
+    *
+from
+    speakers;
 
-
+ALTER USER 'root' IDENTIFIED BY 'feil_passord' schema abebe_bediye;

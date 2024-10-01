@@ -13,7 +13,7 @@ const db = await mysql.createConnection({
     host: "localhost",
     user: "student",
     password: "Str0ngP@ssw0rd!",
-    database: "losningforslag",
+    database: "losningsforslag",
 });
 
 // ! Her lager vi en enkel rute for å hente ut alle speakers fra databasen
