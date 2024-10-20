@@ -1,6 +1,6 @@
 import express from "express";
-// ! Vi bytter ut mysql med mysql2 fordi mysql2 har støtte for async/await
-// ! og vi kan bruke mysql2/promise for å få støtte for promises
+// * Vi bytter ut mysql med mysql2 fordi mysql2 har støtte for async/await
+// * og vi kan bruke mysql2/promise for å få støtte for promises
 import mysql from "mysql2/promise";
 
 const PORT = 3000 || process.env.PORT;
@@ -13,17 +13,17 @@ const db = await mysql.createConnection({
     host: "localhost",
     user: "student",
     password: "Str0ngP@ssw0rd!",
-    database: "losningforslag",
+    database: "losningsforslag",
 });
 
-// ! Her lager vi en enkel rute for å hente ut alle speakers fra databasen
+// * Her lager vi en enkel rute for å hente ut alle speakers fra databasen
 app.get("/speakers", async (req, res) => {
     const sql = "SELECT * FROM speakers";
     const [rows] = await db.query(sql);
     res.status(200).json(rows);
 });
 
-// ! Her lager vi en rute for å hente ut en spesifikk speaker fra databasen
+// * Her lager vi en rute for å hente ut en spesifikk speaker fra databasen
 app.get("/speakers/:id", async (req, res) => {
     const { id } = req.params;
     const sql = "SELECT * FROM speakers where id = ?";
@@ -32,24 +32,24 @@ app.get("/speakers/:id", async (req, res) => {
 });
 
 app.post("/speakers", async (req, res) => {
-    // ! Her henter vi ut de feltene vi trenger fra req.body
+    // * Her henter vi ut de feltene vi trenger fra req.body
     const { name, email, company } = req.body;
 
-    // ! Her bruker vi en try-catch block fordi database spørringer kan feile
+    // * Her bruker vi en try-catch block fordi database spørringer kan feile
     try {
         const sql = "INSERT INTO speakers SET name = ?, email = ?, company = ?";
         const [{ insertId }] = await db.execute(sql, [name, email, company]);
         res.status(201).send({ id: insertId, name, email, company });
     } catch (err) {
-        // ! Her vil vi logge til logge tjenesten vår hvilken feil vi fikk,
-        // ! i dette tilfellet bruker vi console.log men denne kan erstattes med en logge tjeneste som f.eks. slf4j
+        // * Her vil vi logge til logge tjenesten vår hvilken feil vi fikk,
+        // * i dette tilfellet bruker vi console.log men denne kan erstattes med en logge tjeneste som f.eks. slf4j
         console.log({
             code: err.code,
             statement: err.sql,
             message: err.sqlMessage,
         });
 
-        // ! Til klienten svarer vi med en 500 statuskode og en feilmelding men vi sier ikke hva feilen er
+        // * Til klienten svarer vi med en 500 statuskode og en feilmelding men vi sier ikke hva feilen er
         res.status(500).json({
             error: true,
             message: "An error occured",

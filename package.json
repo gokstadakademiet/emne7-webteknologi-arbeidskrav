@@ -5,7 +5,8 @@
     "main": "server.js",
     "type": "module",
     "scripts": {
-        "dev": "nodemon server.js"
+        "dev": "nodemon server.js",
+        "setup_db": "mysql -u root  < setup.sql"
     },
     "keywords": [],
     "author": "Abebe Bediye",
