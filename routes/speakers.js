@@ -2,15 +2,64 @@ import { Router } from "express";
 import { db } from "../config/db.js";
 
 const router = Router();
-
-// * Her lager vi en enkel rute for å hente ut alle speakers fra databasen
+/**
+ * @swagger
+ * /speakers:
+ *   get:
+ *     summary: Retrieve a list of speakers
+ *     responses:
+ *       200:
+ *         description: A list of speakers
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   name:
+ *                     type: string
+ *                   email:
+ *                     type: string
+ *                   company:
+ *                     type: string
+ */
 router.get("/", async (req, res) => {
     const sql = "SELECT * FROM speakers";
     const [rows] = await db.query(sql);
     res.status(200).json(rows);
 });
 
-// * Her lager vi en rute for å hente ut en spesifikk speaker fra databasen
+/**
+ * @swagger
+ * /speakers/{id}:
+ *   get:
+ *     summary: Retrieve a specific speaker
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: A single speaker
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 name:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 company:
+ *                   type: string
+ */
 router.get("/:id", async (req, res) => {
     const { id } = req.params;
     const sql = "SELECT * FROM speakers where id = ?";
@@ -18,25 +67,54 @@ router.get("/:id", async (req, res) => {
     res.status(200).json(rows);
 });
 
+/**
+ * @swagger
+ * /speakers:
+ *   post:
+ *     summary: Create a new speaker
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               company:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: The created speaker
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 name:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 company:
+ *                   type: string
+ */
 router.post("/", async (req, res) => {
-    // * Her henter vi ut de feltene vi trenger fra req.body
     const { name, email, company } = req.body;
 
-    // * Her bruker vi en try-catch block fordi database spørringer kan feile
     try {
         const sql = "INSERT INTO speakers SET name = ?, email = ?, company = ?";
         const [{ insertId }] = await db.execute(sql, [name, email, company]);
         res.status(201).send({ id: insertId, name, email, company });
     } catch (err) {
-        // * Her vil vi logge til logge tjenesten vår hvilken feil vi fikk,
-        // * i dette tilfellet bruker vi console.log men denne kan erstattes med en logge tjeneste som f.eks. slf4j
         console.log({
             code: err.code,
             statement: err.sql,
             message: err.sqlMessage,
         });
-
-        // * Til klienten svarer vi med en 500 statuskode og en feilmelding men vi sier ikke hva feilen er
         res.status(500).json({
             error: true,
             message: "An error occured",
@@ -44,6 +122,47 @@ router.post("/", async (req, res) => {
     }
 });
 
+/**
+ * @swagger
+ * /speakers/{id}:
+ *   put:
+ *     summary: Update a speaker
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               company:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: The updated speaker
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 name:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 company:
+ *                   type: string
+ */
 router.put("/:id", async (req, res) => {
     const { id } = req.params;
     const { name, email, company } = req.body;
@@ -63,6 +182,21 @@ router.put("/:id", async (req, res) => {
     }
 });
 
+/**
+ * @swagger
+ * /speakers/{id}:
+ *   delete:
+ *     summary: Delete a speaker
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       204:
+ *         description: No content
+ */
 router.delete("/:id", async (req, res) => {
     const { id } = req.params;
 

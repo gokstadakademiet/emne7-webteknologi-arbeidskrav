@@ -6,14 +6,18 @@
     "type": "module",
     "scripts": {
         "dev": "nodemon server.js",
-        "setup_db": "mysql -u root  < setup.sql"
+        "setup_db": "mysql -u root  < setup.sql",
+        "swagger": "node swagger.js"
     },
     "keywords": [],
     "author": "Abebe Bediye",
     "license": "MIT",
     "dependencies": {
+        "and": "^0.0.3",
         "express": "^4.21.0",
-        "mysql2": "^3.11.3"
+        "mysql2": "^3.11.3",
+        "swagger-jsdoc": "^6.2.8",
+        "swagger-ui-express": "^5.0.1"
     },
     "devDependencies": {
         "nodemon": "^3.1.7"
